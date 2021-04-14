@@ -1,0 +1,211 @@
+---
+title: "Bryan Acton's CV"
+author: Bryan Acton
+date: "`r Sys.Date()`"
+bibliography: Bryan.bib
+csl: apa.csl
+nocite: | 
+  @actonBuiltUnityAssessing2020, @actonPuttingEmergenceBack2019a, 
+  @hansbroughYouRememberRater2020a
+params:
+  pdf_mode:
+    value: true
+output:
+  pagedown::html_resume:
+    css: ['dd_cv.css', 'resume']
+    self_contained: true
+---
+
+```{r, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(rmarkdown)
+require(VennDiagram)
+knitr::opts_chunk$set(
+  results='asis', 
+  echo = FALSE
+)
+
+library(magrittr) # For the pipe
+source("cv_printing_functions.r")
+
+# Read in all data and initialize a CV printer object
+CV <- create_CV_object(
+  data_location = "https://docs.google.com/spreadsheets/d/1FAJbxnIAg5MVLFvW-y54K6KNwBmGsfsJQY5EIrIlUYw",  
+  pdf_mode = params$pdf_mode
+)
+
+```
+
+
+```{r}
+# When in pdf export mode the little dots are unaligned, so fix that with some conditional CSS.
+if(params$pdf_mode) {
+    cat("
+<style>
+:root{
+  --decorator-outer-offset-left: -6.5px;
+}
+</style>")
+}
+```
+
+
+Aside
+================================================================================
+
+```{r}
+# Build interactive network of positions colored by section
+# and connected if they occurred in the same year
+datadrivencv::build_network_logo(CV$entries_data)
+```
+
+This CV was made by using Nick Strayer's datadrivencv R package, and built in R blogdown
+
+\
+```{r}
+if(params$pdf_mode){
+  cat("View this CV online with links at _bpacton.com/vitae/_")
+} else {
+  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf)")
+}
+```
+
+Contact {#contact}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %>% print_contact_info()
+```
+
+
+
+R Skills {#skills}
+--------------------------------------------------------------------------------
+
+```{r, out.height=800, out.width=700}
+ggplot(data=CV$skills,aes(x=skill, y= level, label = skill)) + 
+  geom_bar(stat = "identity", colour="black") +
+  coord_flip() +
+  labs(x=" ", y="Level", fill=" ")  +
+  theme_minimal() +
+  scale_fill_brewer(palette = "YlOrBr",direction = -1) +
+  geom_text(aes(label = skill), position = position_stack(vjust = 0.5), color = "#F7FBFF",  size=6) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())
+```
+
+
+
+Main
+================================================================================
+
+Bryan Acton {#title}
+--------------------------------------------------------------------------------
+
+```{r}
+# Note the special double pipe so we modify the CV object in place
+CV %<>% print_text_block("intro") 
+```
+
+
+
+Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('education')
+```
+
+
+
+Research Experience {data-icon=laptop}
+--------------------------------------------------------------------------------
+
+
+```{r}
+CV %<>% print_section('research_positions')
+```
+
+
+::: aside
+```{r}
+CV %<>% print_text_block('industy_experience_aside')
+```
+
+:::
+Publications {data-icon=chart-line}
+--------------------------------------------------------------------------------
+
+::: aside
+```{r}
+CV %<>% print_text_block('data_science_writing_aside')
+```
+:::
+\setlength{\parindent}{-0.2in}
+\setlength{\leftskip}{0.2in}
+<div id = "refs"></div>
+
+
+Teaching Experience {data-icon=chalkboard-teacher}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('teaching_positions')
+```
+
+
+Industry Experience {data-icon=suitcase}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('industry_positions')
+```
+
+<!-- These breaks just force a new page so section doesnt get cut off -->
+<br>
+<br>
+<br>
+
+Blogs Written (About)  {data-icon=newspaper}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('blogs')
+```
+
+
+<br>
+<br>
+
+
+Workshops Taught  {data-icon=newspaper}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('Workshops')
+```
+
+
+
+Conference Presentations {data-icon=id-badge}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('academic_conferences')
+```
+
+::: aside
+```{r}
+CV %<>% print_text_block('conference_aside')
+```
+:::
+
