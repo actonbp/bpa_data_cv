@@ -1,0 +1,15 @@
+---
+title: "Bryan Acton's CV"
+author: Bryan Acton
+date: "`r Sys.Date()`"
+bibliography: Bryan.bib
+params:
+  pdf_mode:
+    value: true
+output:
+  pagedown::html_resume:
+    css: ['dd_cv.css', 'resume']
+    self_contained: true
+---
+
+

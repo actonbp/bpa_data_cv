@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 bibliography: Bryan.bib
 csl: apa.csl
 nocite: | 
-  @actonBuiltUnityAssessing2020, @actonPuttingEmergenceBack2019a, 
-  @hansbroughYouRememberRater2020a
+  @acton_putting_2019,
+  @acton_built_2020,
+  @hansbrough_you_2021,
+  @nieberle_leader_2023, 
 params:
   pdf_mode:
     value: true
@@ -78,33 +80,6 @@ Contact {#contact}
 CV %>% print_contact_info()
 ```
 
-
-
-R Skills {#skills}
---------------------------------------------------------------------------------
-
-```{r, out.height=800, out.width=700}
-ggplot(data=CV$skills,aes(x=skill, y= level, label = skill)) + 
-  geom_bar(stat = "identity", colour="black") +
-  coord_flip() +
-  labs(x=" ", y="Level", fill=" ")  +
-  theme_minimal() +
-  scale_fill_brewer(palette = "YlOrBr",direction = -1) +
-  geom_text(aes(label = skill), position = position_stack(vjust = 0.5), color = "#F7FBFF",  size=6) +
-  theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(),
-        axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(),
-        panel.background = element_blank())
-```
-
-
-
 Main
 ================================================================================
 
@@ -125,6 +100,24 @@ Education {data-icon=graduation-cap data-concise=true}
 CV %<>% print_section('education')
 ```
 
+Publications {data-icon=chart-line}
+--------------------------------------------------------------------------------
+
+::: aside
+```{r}
+CV %<>% print_text_block('data_science_writing_aside')
+```
+:::
+\setlength{\parindent}{-0.2in}
+\setlength{\leftskip}{0.2in}
+<div id = "refs"></div>
+
+Working Papers {data-icon=chart-line}
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('working_papers')
+```
 
 
 Research Experience {data-icon=laptop}
@@ -142,17 +135,6 @@ CV %<>% print_text_block('industy_experience_aside')
 ```
 
 :::
-Publications {data-icon=chart-line}
---------------------------------------------------------------------------------
-
-::: aside
-```{r}
-CV %<>% print_text_block('data_science_writing_aside')
-```
-:::
-\setlength{\parindent}{-0.2in}
-\setlength{\leftskip}{0.2in}
-<div id = "refs"></div>
 
 
 Teaching Experience {data-icon=chalkboard-teacher}

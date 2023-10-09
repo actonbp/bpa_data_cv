@@ -1,19 +1,21 @@
-@import url("https://fonts.googleapis.com/css?family=Calibri|Garamond+Display&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Arimo&display=swap');
 
-/* Main text is monserrat*/
+/* Main text is Arimo */
 body {
-  font-family: "Calibri", sans-serif;
+  font-family: 'Arimo', sans-serif;
   font-weight: 300;
   line-height: 1.3;
   color: #444;
 }
 
-/* Give headers playfair font */
+/* Give headers Cormorant Garamond font */
 h1,
 h2,
 h3 {
-  font-family: "Garamond", serif;
+  font-family: 'Cormorant Garamond', serif;
   color: #000;
+  font-weight: 500; /* Adjusting the font-weight to a medium bold */
+  font-size: 2em;  /* Adjust size if necessary */
 }
 
 /* When in PDF export mode make sure superscripts are nice and small and italic */
@@ -26,6 +28,7 @@ sup {
 .blocks {
   break-inside: avoid;
 }
+
 
 * {
   /* Override default right margin for sidebar*/
