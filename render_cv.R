@@ -1,16 +1,19 @@
-# This script builds both the HTML and PDF versions of your CV
-
-# If you wanted to speed up rendering for googlesheets driven CVs you could use
-# this script to cache a version of the CV_Printer class with data already
-# loaded and load the cached version in the .Rmd instead of re-fetching it twice
-# for the HTML and PDF rendering. This exercise is left to the reader.
+# Load necessary library
 library(datadrivencv)
+
+# Get today's date and format it to match your desired format
+today_date <- format(Sys.Date(), "%m.%d.%Y")
+
+# Create file names with today's date
+html_file_name <- paste0("Acton_CV_", today_date, ".html")
+pdf_file_name <- paste0("Acton_CV_", today_date, ".pdf")
+
 # Knit the HTML version
 rmarkdown::render("cv_current.rmd",
                   params = list(pdf_mode = FALSE),
-                  output_file = "Acton_CV_10.9.2023.html")
+                  output_file = html_file_name)
 
-# Knit the PDF version to temporary html location
+# Knit the PDF version to temporary HTML location
 tmp_html_cv_loc <- fs::file_temp(ext = ".html")
 rmarkdown::render("cv_current.rmd",
                   params = list(pdf_mode = TRUE),
@@ -18,6 +21,6 @@ rmarkdown::render("cv_current.rmd",
 
 # Convert to PDF using Pagedown
 pagedown::chrome_print(input = tmp_html_cv_loc,
-                       output = "Acton_CV_10.9.2023.pdf")
+                       output = pdf_file_name)
 
-##CHANGE DATE IN FILE NAME WOOHOO!
+##DATE IN FILE NAME AUTOMATICALLY UPDATED!
